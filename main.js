@@ -18,8 +18,9 @@ const URLs = {
 }
 
 const sortTypes = {
-  aa: 'AMOUNT_ASC',
-  cd: "CREATETIME_DESC"
+  aa: 'AMOUNT_ASC', // 最便宜
+  cd: "CREATETIME_DESC", // 最新 
+  rd: "RAREDEGREE_DESC" // 高等级
 }
 
 /**
@@ -52,7 +53,7 @@ const gen = async (petId, amount, validCode) => {
       })
     // return captcha
   } catch (err) {
-    // console.log(err.response.status)
+    // console.log(JSON.stringify(err.response))
   }
 }
 
@@ -75,17 +76,19 @@ const getCheapestPet = async () => {
     })
     
     const pets = res.data.data.petsOnSale
-    pets.forEach(item => {
-      const { petId, amount, validCode, rareDegree } = item
+
+    for (let i = 0; i < pets.length; i ++) {
+      const { petId, amount, validCode, rareDegree } = pets[i]
       const order = config.orderList[rareDegree]
       if (order.isOrder) {
         console.log(`${order.degree}: ${amount}`)
-        if (amount <= order.maxAmount) {
-          clearInterval(timmer)
-          gen(petId, amount, validCode)
-        }
       }
-    })
+      if (amount <= order.maxAmount) {
+        clearInterval(timmer)
+        gen(petId, amount, validCode)
+        break
+      }
+    }
   } catch (err) {
     // console.log('获取失败')
   }

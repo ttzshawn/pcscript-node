@@ -10,16 +10,16 @@ const cookie = ''
  */
 const orderList = [{
   degree: '普通',
-  isOrder: false,
-  maxAmount: 1000
+  isOrder: true,
+  maxAmount: 1200
 }, {
   degree: '稀有',
   isOrder: false,
-  maxAmount: 1500
+  maxAmount: 1900
 }, {
   degree: '卓越',
   isOrder: true,
-  maxAmount: 3200
+  maxAmount: 2500
 }, {
   degree: '史诗',
   isOrder: true,
